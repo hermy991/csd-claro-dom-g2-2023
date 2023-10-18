@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\ScrumManager.Core\ScrumManager.Core.csproj" />
+    <ProjectReference Include="..\ScrumManager.Data\ScrumManager.Data.csproj" />
+    <ProjectReference Include="..\ScrumManager.Services\ScrumManager.Services.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
