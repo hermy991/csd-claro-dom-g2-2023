@@ -16,9 +16,15 @@ namespace ScrumManager.Console
             System.Console.WriteLine("************************************************************************");
             System.Console.WriteLine("*                          -SCRUM MANAGER-                             *");
             System.Console.WriteLine("************************************************************************\n");
-            System.Console.WriteLine("1. REGISTRAR USUARIO");
+            System.Console.WriteLine();
+            System.Console.WriteLine("Manú");
+            System.Console.WriteLine();
+            System.Console.WriteLine("1. REGISTRAR PROYECTO");
             System.Console.WriteLine("2. REGISTRAR SPRINT");
-            System.Console.WriteLine("4. SALIR");
+            System.Console.WriteLine("3. REPORTERIA DE CALCULOS");
+            System.Console.WriteLine("4. REGISTRAR USUARIO");
+            System.Console.WriteLine();
+            System.Console.WriteLine("9. SALIR");
             System.Console.WriteLine("\n\nDigite el número de la opción a ejecutar: ");
 
            
@@ -29,18 +35,24 @@ namespace ScrumManager.Console
                 switch (opcion.Trim())
                 {
                     case "1":
-                        System.Console.Clear();
-                        opcionValida = true;
-                        var registrarUsuario = new RegistrarUsuario();
+                        //System.Console.Clear();
+                        //opcionValida = true;
+                        //var registrarUsuario = new RegistrarUsuario();
                         break;
                     case "2":
                         System.Console.Clear();
                         opcionValida = true;
                         var registrarSprint = new RegistrarSprint();
                         break;
-                    case "4":
+                    case "3":
+                        System.Console.Clear();
+                        opcionValida = true;
+                        var registrarUsuario = new RegistrarUsuario();
+                        break;
+                    case "9":
                         System.Console.WriteLine("Presione ENTER para salir");
                         System.Console.ReadLine();
+                        System.Environment.Exit(0);
                         break;
                     default:
                         System.Console.WriteLine("Opcion Invalida!");
