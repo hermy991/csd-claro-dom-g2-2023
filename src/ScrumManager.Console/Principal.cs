@@ -35,9 +35,9 @@ namespace ScrumManager.Console
                 switch (opcion.Trim())
                 {
                     case "1":
-                        //System.Console.Clear();
-                        //opcionValida = true;
-                        //var registrarUsuario = new RegistrarUsuario();
+                        System.Console.Clear();
+                        opcionValida = true;
+                        var registrarProyecto = new RegistrarProyecto();
                         break;
                     case "2":
                         System.Console.Clear();
