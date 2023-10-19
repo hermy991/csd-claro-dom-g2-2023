@@ -22,7 +22,7 @@ namespace ScrumManager.Console
             dtSprint.Columns.Add("Apellidos");
             dtSprint.Columns.Add("Contrasena");
 
-            CargarMenu();
+            CargarMenuUsuario();
         }
         public void CargarEncabezado()
         {
@@ -31,7 +31,7 @@ namespace ScrumManager.Console
             System.Console.WriteLine("*                          -SCRUM MANAGER-                             *");
             System.Console.WriteLine("************************************************************************\n\n");
         }
-        public void CargarMenu()
+        public void CargarMenuUsuario()
         {
             CargarEncabezado();
             System.Console.WriteLine("                          REGISTRAR USUARIO ");
@@ -92,13 +92,13 @@ namespace ScrumManager.Console
 
                 System.Console.WriteLine("\n\nEnter para volver al menu anterior...");
                 System.Console.ReadLine();
-                CargarMenu();
+                CargarMenuUsuario();
             }
             else
             {
                 System.Console.WriteLine("No hay usuarios registrados");
                 System.Console.ReadLine();
-                CargarMenu();
+                CargarMenuUsuario();
             }
 
         }
@@ -107,13 +107,13 @@ namespace ScrumManager.Console
             CargarEncabezado();
             System.Console.WriteLine("                          NUEVO USUARIO ");
             System.Console.Write("Email: ");
-            email = System.Console.ReadLine();
+            var email = System.Console.ReadLine();
             System.Console.Write("Nombre: ");
-            nombre = System.Console.ReadLine();
+            var nombre = System.Console.ReadLine();
             System.Console.Write("Apellido: ");
-            apellido = System.Console.ReadLine();
+            var apellido = System.Console.ReadLine();
             System.Console.Write("Contrasena: ");
-            contrasena = System.Console.ReadLine();
+            var contrasena = System.Console.ReadLine();
             DataRow row = dtSprint.NewRow();
             row["Email"] = email;
             row["Nombre"] = nombre;
@@ -122,7 +122,7 @@ namespace ScrumManager.Console
             dtSprint.Rows.Add(row);
             System.Console.WriteLine("\n\nUSUARIO REGISTRADO CORRECTAMENTE!\n Enter para continuar...");
             System.Console.ReadLine();
-            CargarMenu();
+            CargarMenuUsuario();
 
         }
         public void ModificarUsuario()
@@ -160,16 +160,16 @@ namespace ScrumManager.Console
                         System.Console.Write("Nuevo Nombre: ");
                         nombre = System.Console.ReadLine();
                         System.Console.Write("Nuevo Apellido: ");
-                        apellido = System.Console.ReadLine();
+                        var apellido = System.Console.ReadLine();
                         System.Console.Write("Nueva Contrasena: ");
-                        contrasena = System.Console.ReadLine();
+                        var contrasena = System.Console.ReadLine();
 
                         dtSprint.Rows[index]["Nombre"] = nombre;
                         dtSprint.Rows[index]["Apellidos"] = apellido;
                         dtSprint.Rows[index]["Contrasena"] = contrasena;
                         System.Console.WriteLine("\n\nUSUARIO ACTUALIZADO CORRECTAMENTE!\n Enter para continuar...");
                         System.Console.ReadLine();
-                        CargarMenu();
+                        CargarMenuUsuario();
                     }
                     else
                     {
@@ -214,13 +214,13 @@ namespace ScrumManager.Console
                     if (index >= 0 && index < dtSprint.Rows.Count)
                     {
                         numeroValido = true;
-                        System.Console.WriteLine(dtSprint.Rows[index]["Email"].ToString().PadRight(25) + "|" +
-                      dtSprint.Rows[index]["Nombre"].ToString() + "|" +
-                      dtSprint.Rows[index]["Apellidos"].ToString());
-                        dtSprint.Rows[index].Delete();
+                        System.Console.WriteLine(dtSprint.Rows[index]["Email"]?.ToString()?.PadRight(25) + "|" +
+                          dtSprint.Rows[index]["Nombre"].ToString() + "|" +
+                          dtSprint.Rows[index]["Apellidos"].ToString());
+                          dtSprint.Rows[index].Delete();
                         System.Console.WriteLine("Usuario Eliminado!");
                         System.Console.ReadLine();
-                        CargarMenu();
+                        CargarMenuUsuario();
                     }
                     else
                     {
@@ -238,5 +238,4 @@ namespace ScrumManager.Console
             } while (numeroValido == false);
         }
     }
-}
 }
