@@ -11,16 +11,18 @@ namespace ScrumManager.Console
     {
         DataTable dtSprint;
         string opcion = "0";
-        string nombre = string.Empty;
-        int duracionCantidad = default;
-        string duracionUnidad = string.Empty;
         public RegistrarSprint()
         {
             dtSprint = new DataTable();
-            dtSprint.Columns.Add("Email");
             dtSprint.Columns.Add("Nombre");
-            dtSprint.Columns.Add("Apellidos");
-            dtSprint.Columns.Add("Contrasena");
+            dtSprint.Columns.Add("DuracionCantidad");
+            dtSprint.Columns.Add("DuracionUnidad");
+            dtSprint.Columns.Add("Regular");
+            dtSprint.Columns.Add("Puntos");
+            dtSprint.Columns.Add("Desde");
+            dtSprint.Columns.Add("Hasta");
+            dtSprint.Columns.Add("PuntosTerminados");
+            dtSprint.Columns.Add("Desarrolladores");
 
             CargarMenu();
         }
@@ -34,13 +36,11 @@ namespace ScrumManager.Console
         public void CargarMenu()
         {
             CargarEncabezado();
-            System.Console.WriteLine("                          REGISTRAR USUARIO ");
+            System.Console.WriteLine("                          REGISTRAR SPRINT ");
             System.Console.WriteLine("\nSELECCIONE LA OPCION A EJECUTAR: ");
-            System.Console.WriteLine("1. Agregar Usuario");
-            System.Console.WriteLine("2. Modificar Usuario");
-            System.Console.WriteLine("3. Eliminar Usuario");
-            System.Console.WriteLine("4. Ver Usuarios\n");
-            bool opcionValida = false;
+            System.Console.WriteLine("1. Agregar Sprint");
+            System.Console.WriteLine("2. Ver Sprints\n");
+            bool opcionValida;
             do
             {
                 opcion = System.Console.ReadLine();
@@ -48,22 +48,12 @@ namespace ScrumManager.Console
                 {
                     case "1":
                         System.Console.Clear();
-                        AgregarUsuario();
+                        AgregarSprint();
                         opcionValida = true;
                         break;
                     case "2":
                         System.Console.Clear();
-                        ModificarUsuario();
-                        opcionValida = true;
-                        break;
-                    case "3":
-                        System.Console.Clear();
-                        EliminarUsuario();
-                        opcionValida = true;
-                        break;
-                    case "4":
-                        System.Console.Clear();
-                        VerUsuarios();
+                        VerSprints();
                         opcionValida = true;
                         break;
                     default:
@@ -71,22 +61,76 @@ namespace ScrumManager.Console
                         System.Console.WriteLine("Opcion Invalida");
                         break;
                 }
-            } while (opcionValida == false);
+            } while (!opcionValida);
         }
-
-        public void VerUsuarios()
+        public void AgregarSprint()
         {
             CargarEncabezado();
-            System.Console.WriteLine("                          USUARIOS REGISTRADOS ");
+            System.Console.WriteLine("                          NUEVO SPRINT");
+            System.Console.Write("Nombre: ");
+            var name = System.Console.ReadLine();
+
+            System.Console.Write("Cantidad de duracion: ");
+            var durationQuantity = int.Parse(System.Console.ReadLine());
+
+            System.Console.Write("Unidad de duracion: ");
+            var durationUnit = System.Console.ReadLine();
+
+            System.Console.Write("Regular [Y/N]: ");
+            var regular = System.Console.ReadLine() == "Y";
+
+            System.Console.Write("Puntos: ");
+            var points = int.Parse(System.Console.ReadLine());
+
+            System.Console.Write("Desde: ");
+            var startDate = DateTime.Parse(System.Console.ReadLine());
+
+            System.Console.Write("Hasta : ");
+            var endDate = DateTime.Parse(System.Console.ReadLine());
+
+            System.Console.Write("Puntos terminados: ");
+            var finalPoints = int.Parse(System.Console.ReadLine());
+
+            System.Console.Write("Desarrolladores: ");
+            var developers = System.Console.ReadLine();
+
+            DataRow row = dtSprint.NewRow();
+            row["Nombre"] = name;
+            row["DuracionCantidad"] = durationQuantity;
+            row["DuracionUnidad"] = durationUnit;
+            row["Regular"] = regular;
+            row["Puntos"] = points;
+            row["Desde"] = startDate;
+            row["Hasta"] = endDate;
+            row["PuntosTerminados"] = finalPoints;
+            row["Desarrolladores"] = developers;
+
+            dtSprint.Rows.Add(row);
+            System.Console.WriteLine("\n\nSPRINT REGISTRADO CORRECTAMENTE!\n Enter para continuar...");
+            System.Console.ReadLine();
+            CargarMenu();
+        }
+        public void VerSprints()
+        {
+            CargarEncabezado();
+            System.Console.WriteLine("                          SPRINTS REGISTRADOS ");
 
             if (dtSprint.Rows.Count > 0)
             {
 
                 for (int i = 0; i < dtSprint.Rows.Count; i++)
                 {
-                    System.Console.WriteLine(dtSprint.Rows[i]["Email"].ToString().PadRight(25) + "|" +
-                        dtSprint.Rows[i]["Nombre"].ToString() + "|" +
-                        dtSprint.Rows[i]["Apellidos"].ToString());
+                    System.Console.WriteLine(
+                        $"{dtSprint.Rows[i]["Nombre"]} | " +
+                        $"{dtSprint.Rows[i]["DuracionCantidad"]} | " +
+                        $"{dtSprint.Rows[i]["DuracionUnidad"]} | " +
+                        $"{dtSprint.Rows[i]["Regular"]} | " +
+                        $"{dtSprint.Rows[i]["Puntos"]} | " +
+                        $"{dtSprint.Rows[i]["Desde"]} | " +
+                        $"{dtSprint.Rows[i]["Hasta"]} | " +
+                        $"{dtSprint.Rows[i]["PuntosTerminados"]} | " +
+                        $"{dtSprint.Rows[i]["Desarrolladores"]} | "
+                    );
 
                 }
 
@@ -96,147 +140,10 @@ namespace ScrumManager.Console
             }
             else
             {
-                System.Console.WriteLine("No hay usuarios registrados");
+                System.Console.WriteLine("No hay sprints registrados");
                 System.Console.ReadLine();
                 CargarMenu();
             }
-
-        }
-        public void AgregarUsuario()
-        {
-            CargarEncabezado();
-            System.Console.WriteLine("                          NUEVO USUARIO ");
-            System.Console.Write("Email: ");
-            email = System.Console.ReadLine();
-            System.Console.Write("Nombre: ");
-            nombre = System.Console.ReadLine();
-            System.Console.Write("Apellido: ");
-            apellido = System.Console.ReadLine();
-            System.Console.Write("Contrasena: ");
-            contrasena = System.Console.ReadLine();
-            DataRow row = dtSprint.NewRow();
-            row["Email"] = email;
-            row["Nombre"] = nombre;
-            row["Apellidos"] = apellido;
-            row["Contrasena"] = contrasena;
-            dtSprint.Rows.Add(row);
-            System.Console.WriteLine("\n\nUSUARIO REGISTRADO CORRECTAMENTE!\n Enter para continuar...");
-            System.Console.ReadLine();
-            CargarMenu();
-
-        }
-        public void ModificarUsuario()
-        {
-            CargarEncabezado();
-            System.Console.WriteLine("                          MODIFICAR USUARIO ");
-            if (dtSprint.Rows.Count > 0)
-            {
-
-                for (int i = 0; i < dtSprint.Rows.Count; i++)
-                {
-                    System.Console.WriteLine((i + 1).ToString() + "- " + dtSprint.Rows[i]["Email"].ToString().PadRight(25) + "|" +
-                        dtSprint.Rows[i]["Nombre"].ToString() + "|" +
-                        dtSprint.Rows[i]["Apellidos"].ToString());
-
-                }
-
-            }
-            bool numeroValido = false;
-            string numero = "0";
-            do
-            {
-                System.Console.WriteLine("\nSELECCIONE EL NUMERO DEL USUARIO A MODIFICAR ");
-                numero = System.Console.ReadLine();
-                try
-                {
-                    int index = Convert.ToInt32(numero) - 1;
-                    if (index >= 0 && index < dtSprint.Rows.Count)
-                    {
-                        numeroValido = true;
-                        System.Console.WriteLine(dtSprint.Rows[index]["Email"].ToString().PadRight(25) + "|" +
-                      dtSprint.Rows[index]["Nombre"].ToString() + "|" +
-                      dtSprint.Rows[index]["Apellidos"].ToString());
-
-                        System.Console.Write("Nuevo Nombre: ");
-                        nombre = System.Console.ReadLine();
-                        System.Console.Write("Nuevo Apellido: ");
-                        apellido = System.Console.ReadLine();
-                        System.Console.Write("Nueva Contrasena: ");
-                        contrasena = System.Console.ReadLine();
-
-                        dtSprint.Rows[index]["Nombre"] = nombre;
-                        dtSprint.Rows[index]["Apellidos"] = apellido;
-                        dtSprint.Rows[index]["Contrasena"] = contrasena;
-                        System.Console.WriteLine("\n\nUSUARIO ACTUALIZADO CORRECTAMENTE!\n Enter para continuar...");
-                        System.Console.ReadLine();
-                        CargarMenu();
-                    }
-                    else
-                    {
-                        System.Console.WriteLine("Numero Invalido!");
-                        numeroValido = false;
-                        System.Console.ReadLine();
-                    }
-                }
-                catch
-                {
-                    System.Console.WriteLine("Numero Invalido!");
-                    numeroValido = false;
-                    System.Console.ReadLine();
-                }
-            } while (numeroValido == false);
-        }
-        public void EliminarUsuario()
-        {
-            CargarEncabezado();
-            System.Console.WriteLine("                          ELIMINAR USUARIO ");
-            if (dtSprint.Rows.Count > 0)
-            {
-
-                for (int i = 0; i < dtSprint.Rows.Count; i++)
-                {
-                    System.Console.WriteLine((i + 1).ToString() + "- " + dtSprint.Rows[i]["Email"].ToString().PadRight(25) + "|" +
-                        dtSprint.Rows[i]["Nombre"].ToString() + "|" +
-                        dtSprint.Rows[i]["Apellidos"].ToString());
-
-                }
-
-            }
-            bool numeroValido = false;
-            string numero = "0";
-            do
-            {
-                System.Console.WriteLine("\nSELECCIONE EL NUMERO DEL USUARIO A ELIMINAR ");
-                numero = System.Console.ReadLine();
-                try
-                {
-                    int index = Convert.ToInt32(numero) - 1;
-                    if (index >= 0 && index < dtSprint.Rows.Count)
-                    {
-                        numeroValido = true;
-                        System.Console.WriteLine(dtSprint.Rows[index]["Email"].ToString().PadRight(25) + "|" +
-                      dtSprint.Rows[index]["Nombre"].ToString() + "|" +
-                      dtSprint.Rows[index]["Apellidos"].ToString());
-                        dtSprint.Rows[index].Delete();
-                        System.Console.WriteLine("Usuario Eliminado!");
-                        System.Console.ReadLine();
-                        CargarMenu();
-                    }
-                    else
-                    {
-                        System.Console.WriteLine("Numero Invalido!");
-                        numeroValido = false;
-                        System.Console.ReadLine();
-                    }
-                }
-                catch
-                {
-                    System.Console.WriteLine("Numero Invalido!");
-                    numeroValido = false;
-                    System.Console.ReadLine();
-                }
-            } while (numeroValido == false);
         }
     }
-}
 }
